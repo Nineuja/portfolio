@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio · Vandermeulen Arnaud Étudiant EPHEC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sage:        #8aab8a;
+      --sage-light:  #b8cfb8;
+      --sage-pale:   #ddeadd;
+      --sage-mist:   #f0f5f0;
+      --sage-dark:   #5a7d5a;
+      --sage-deep:   #3d5c3d;
+      --ink:         #1e2a1e;
+      --ink-mid:     #3a4a3a;
+      --ink-soft:    #6a7d6a;
+      --white:       #fafcfa;
+      --accent:      #4d8b6f;
+ 
+      --font-mono: 'Space Mono', monospace;
+      --font-body: 'DM Sans', sans-serif;
+      --radius:    12px;
+      --radius-lg: 20px;
+      --shadow:    0 4px 24px rgba(90,125,90,0.13);
+      --shadow-lg: 0 8px 40px rgba(90,125,90,0.18);
+    }
+ 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--sage-mist);
+      color: var(--ink);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-canvas svg { width: 100%; height: 100%; }
+ 
+    .grid-dot { fill: var(--sage); opacity: 0.18; }
+ 
+    .arc {
+      fill: none;
+      stroke: var(--sage-dark);
+      stroke-linecap: round;
+      opacity: 0;
+      animation: arc-pulse 4s ease-out infinite;
+    }
+    .arc:nth-child(1) { animation-delay: 0s;   stroke-width: 2;   }
+    .arc:nth-child(2) { animation-delay: 0.7s; stroke-width: 1.6; }
+    .arc:nth-child(3) { animation-delay: 1.4s; stroke-width: 1.3; }
+    .arc:nth-child(4) { animation-delay: 2.1s; stroke-width: 1.1; }
+    .arc:nth-child(5) { animation-delay: 2.8s; stroke-width: 0.9; }
+    .arc:nth-child(6) { animation-delay: 3.5s; stroke-width: 0.7; }
+ 
+    @keyframes arc-pulse {
+      0%   { opacity: 0;    }
+      15%  { opacity: 0.52; }
+      100% { opacity: 0;    }
+    }
+ 
+    /* Arcs antenne secondaire */
+    .arc2 {
+      fill: none;
+      stroke: var(--sage);
+      stroke-linecap: round;
+      opacity: 0;
+      animation: arc-pulse 5s ease-out infinite;
+    }
+    .arc2:nth-child(1) { animation-delay: 0.5s; stroke-width: 1.5; }
+    .arc2:nth-child(2) { animation-delay: 1.3s; stroke-width: 1.2; }
+    .arc2:nth-child(3) { animation-delay: 2.1s; stroke-width: 0.9; }
+    .arc2:nth-child(4) { animation-delay: 2.9s; stroke-width: 0.7; }
+ 
+    .sine {
+      fill: none;
+      stroke: var(--sage);
+      stroke-width: 1.2;
+      opacity: 0.13;
+      stroke-dasharray: 10 5;
+      animation: sine-drift 14s linear infinite;
+    }
+    @keyframes sine-drift {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: -300; }
+    }
+ 
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+ 
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,245,240,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--sage-pale);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; gap: 1rem;
+    }
+    .nav-logo {
+      font-family: var(--font-mono); font-size: 0.78rem;
+      color: var(--sage-dark); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 0.2rem; list-style: none; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a {
+      font-size: 0.75rem; font-family: var(--font-mono);
+      color: var(--ink-soft); text-decoration: none;
+      padding: 0.28rem 0.6rem; border-radius: 6px;
+      transition: background 0.2s, color 0.2s; letter-spacing: 0.04em;
+    }
+    .nav-links a:hover { background: var(--sage-pale); color: var(--sage-deep); }
+ 
+    .hero {
+      padding: 5rem 0 4rem;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center;
+    }
+    .hero-text h1 {
+      font-family: var(--font-mono);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.15; color: var(--sage-deep); margin-bottom: 0.75rem;
+    }
+    .hero-text h1 em { font-style: normal; color: var(--accent); }
+    .hero-subtitle { font-size: 1rem; color: var(--ink-soft); margin-bottom: 1.5rem; max-width: 700px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag {
+      font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em;
+      padding: 0.3rem 0.7rem; border-radius: 100px;
+      background: var(--sage-pale); color: var(--sage-deep); border: 1px solid var(--sage-light);
+    }
+ 
+    .photo-frame {
+      position: relative;
+      width: 200px;
+      flex-shrink: 0;
+      padding-bottom: 28px;
+    }
+    .photo-frame::before {
+      content: ''; position: absolute; inset: -8px;
+      border: 2px solid var(--sage); border-radius: var(--radius-lg);
+      opacity: 0.5; animation: frame-spin 20s linear infinite;
+    }
+    .photo-frame::after {
+      content: ''; position: absolute; inset: -16px;
+      border: 1px dashed var(--sage-light); border-radius: calc(var(--radius-lg) + 8px);
+      opacity: 0.4; animation: frame-spin 30s linear infinite reverse;
+    }
+    @keyframes frame-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    .photo-inner {
+      /* taille exacte du cadre, pas de débordement */
+      position: relative; z-index: 1;
+      width: 200px; height: 200px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 3px solid var(--sage-light);
+      background: var(--sage-pale);
+    }
+    .photo-inner img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+      color: var(--sage); font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.08em; text-align: center; padding: 1rem;
+    }
+    .photo-placeholder svg { opacity: 0.5; }
+
+    .signal-dot {
+      position: absolute;
+      top: 10px; right: 10px;
+      z-index: 3;
+      width: 12px; height: 12px; border-radius: 50%; background: var(--accent);
+      animation: ping 2s ease-out infinite;
+    }
+    @keyframes ping {
+      0%   { box-shadow: 0 0 0 0   rgba(77,139,111,0.5); }
+      70%  { box-shadow: 0 0 0 10px rgba(77,139,111,0); }
+      100% { box-shadow: 0 0 0 0   rgba(77,139,111,0); }
+    }
+ 
+
+    .section-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .section-head h2 {
+      font-family: var(--font-mono); font-size: 1rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-dark);
+    }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--sage-light), transparent); }
+    .section-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--sage); opacity: 0.6; }
+    section { padding: 4rem 0; }
+    section + section { border-top: 1px solid var(--sage-pale); }
+ 
+    .projet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .projet-card {
+      background: var(--white); border: 1px solid var(--sage-pale);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+    }
+    .projet-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(to right, var(--sage), var(--accent));
+    }
+    .projet-card h3 {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 1rem;
+    }
+    .projet-card p { font-size: 0.93rem; color: var(--ink-mid); line-height: 1.75; }
+ 
+
+    .cv-wrapper {
+      background: var(--white); border: 1px solid var(--sage-pale);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+    }
+    .cv-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; background: var(--sage-pale);
+      border-bottom: 1px solid var(--sage-light); flex-wrap: wrap; gap: 0.75rem;
+    }
+    .cv-topbar span { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--sage-deep); text-transform: uppercase; }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--white); background: var(--sage-dark); border: none;
+      border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-download:hover { background: var(--sage-deep); }
+    .cv-embed { width: 100%; height: 750px; border: none; display: block; }
+    .cv-fallback { padding: 3rem; text-align: center; color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.8rem; }
+
+    .themes-grid { display: grid; gap: 1.75rem; }
+ 
+   
+    .theme-card {
+      background: var(--white); border: 1px solid var(--sage-pale);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+    }
+ 
+  
+    .theme-header {
+      padding: 1.25rem 1.75rem;
+      background: linear-gradient(135deg, var(--sage-pale) 0%, var(--sage-mist) 100%);
+      border-bottom: 1px solid var(--sage-light);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0.75rem; align-items: center;
+      cursor: pointer; user-select: none; transition: background 0.2s;
+    }
+    .theme-header:hover { background: var(--sage-pale); }
+    .theme-num { font-family: var(--font-mono); font-size: 0.62rem; color: var(--sage); letter-spacing: 0.1em; margin-bottom: 0.2rem; }
+    .theme-title { font-family: var(--font-mono); font-size: 0.92rem; color: var(--sage-deep); font-weight: 700; margin-bottom: 0.5rem; }
+ 
+    .theme-hours-summary { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 0.35rem; }
+    .h-block { display: flex; flex-direction: column; gap: 0.1rem; }
+    .h-label { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+    .h-val   { font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: var(--accent); }
+    .h-val.counted { color: var(--sage); font-size: 0.88rem; }
+ 
+    .theme-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+    .theme-type-badge {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      padding: 0.2rem 0.55rem; border-radius: 100px;
+      background: var(--sage-light); color: var(--sage-deep); white-space: nowrap;
+    }
+    .theme-chevron { transition: transform 0.3s; color: var(--sage); }
+    .theme-chevron.open { transform: rotate(180deg); }
+ 
+    .theme-body { display: none; }
+    .theme-body.open { display: block; }
+ 
+
+    .activity-list { padding: 1.25rem 1.75rem; display: grid; gap: 1.1rem; }
+
+
+    .proof-content { display: flex; flex-direction: column; gap: 0.5rem; }
+    .proof-img {
+      max-width: 280px;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--sage-light);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .proof-img:hover { opacity: 0.85; }
+    .proof-link { display: inline-block; }
+ 
+
+    .activity-item {
+      border: 1px solid var(--sage-pale);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .activity-header {
+      padding: 0.85rem 1.2rem;
+      background: var(--sage-mist);
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0.5rem; align-items: center;
+      cursor: pointer; user-select: none; transition: background 0.2s;
+    }
+    .activity-header:hover { background: var(--sage-pale); }
+    .activity-name { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--sage-deep); }
+ 
+    .activity-hours-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.3rem; }
+    .ah-block { display: flex; flex-direction: column; }
+    .ah-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+    .ah-val   { font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: var(--accent); }
+    .ah-val.counted { color: var(--sage); }
+ 
+    .act-chevron { transition: transform 0.3s; color: var(--sage); flex-shrink: 0; }
+    .act-chevron.open { transform: rotate(180deg); }
+ 
+    .activity-body {
+      display: none;
+      padding: 1rem 1.25rem 1.25rem;
+      background: var(--white);
+      border-top: 1px solid var(--sage-pale);
+    }
+    .activity-body.open { display: block; }
+ 
+    .act-section {
+      font-family: var(--font-mono); font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage-dark);
+      margin: 1rem 0 0.4rem;
+    }
+    .act-section:first-child { margin-top: 0; }
+    .activity-body p, .activity-body li { font-size: 0.91rem; color: var(--ink-mid); line-height: 1.75; }
+    .activity-body ul { padding-left: 1.2rem; }
+    .activity-body li { margin-bottom: 0.3rem; }
+ 
+    .reflexion-block {
+      padding: 0.85rem 1.1rem; background: var(--sage-mist);
+      border-left: 3px solid var(--sage); border-radius: 0 var(--radius) var(--radius) 0; margin-top: 0.4rem;
+    }
+    .reflexion-block p { font-style: italic; color: var(--ink-mid); }
+ 
+    .proof-block {
+      display: flex; align-items: flex-start; gap: 0.55rem;
+      padding: 0.6rem 0.9rem; background: var(--sage-pale);
+      border-radius: var(--radius); margin-top: 0.75rem;
+    }
+    .proof-block svg { flex-shrink: 0; margin-top: 3px; }
+    .proof-block span { font-size: 0.84rem; color: var(--ink-soft); }
+ 
+
+    .totals-bar {
+      display: flex; gap: 0; flex-wrap: wrap;
+      justify-content: flex-end;
+      margin-top: 2rem;
+      background: var(--white); border: 1px solid var(--sage-pale);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .total-block {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1.25rem 1.75rem;
+      flex: 1; min-width: 180px;
+    }
+    .total-block + .total-block { border-left: 1px solid var(--sage-pale); }
+    .total-icon { color: var(--sage-dark); opacity: 0.6; flex-shrink: 0; }
+    .total-info { display: flex; flex-direction: column; }
+    .total-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+    .total-val   { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--sage-deep); }
+ 
+    footer { border-top: 1px solid var(--sage-pale); padding: 2rem 0; text-align: center; }
+    footer p { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); letter-spacing: 0.06em; }
+    .footer-wave { display: flex; justify-content: center; margin-bottom: 0.6rem; opacity: 0.35; }
+ 
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 3rem 0 2.5rem; gap: 2rem; }
+      .hero > :last-child { order: -1; display: flex; justify-content: center; }
+      .photo-frame { width: 150px; height: 150px; }
+      .projet-grid { grid-template-columns: 1fr; }
+      .totals-bar { flex-direction: column; }
+      .total-block + .total-block { border-left: none; border-top: 1px solid var(--sage-pale); }
+    }
+    @media (max-width: 480px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+ 
+
+<div class="bg-canvas" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+
+    <defs>
+      <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+        <circle class="grid-dot" cx="1" cy="1" r="1"/>
+      </pattern>
+    </defs>
+    <rect width="1440" height="900" fill="url(#dots)"/>
+ 
+
+    <g opacity="0.20">
+
+      <circle cx="1080" cy="110" r="5" fill="var(--sage-dark)"/>
+      <circle cx="1080" cy="110" r="10" fill="none" stroke="var(--sage-dark)" stroke-width="1.5" opacity="0.5"/>
+
+      <line x1="1080" y1="115" x2="1080" y2="520" stroke="var(--sage-dark)" stroke-width="3"/>
+
+      <line x1="1062" y1="200" x2="1098" y2="200" stroke="var(--sage-dark)" stroke-width="1.5"/>
+      <line x1="1055" y1="290" x2="1105" y2="290" stroke="var(--sage-dark)" stroke-width="1.5"/>
+      <line x1="1047" y1="380" x2="1113" y2="380" stroke="var(--sage-dark)" stroke-width="1.5"/>
+      <line x1="1040" y1="460" x2="1120" y2="460" stroke="var(--sage-dark)" stroke-width="1.5"/>
+
+      <line x1="1080" y1="200" x2="1062" y2="290" stroke="var(--sage-dark)" stroke-width="1" opacity="0.6"/>
+      <line x1="1080" y1="200" x2="1098" y2="290" stroke="var(--sage-dark)" stroke-width="1" opacity="0.6"/>
+      <line x1="1080" y1="290" x2="1055" y2="380" stroke="var(--sage-dark)" stroke-width="1" opacity="0.6"/>
+      <line x1="1080" y1="290" x2="1105" y2="380" stroke="var(--sage-dark)" stroke-width="1" opacity="0.6"/>
+
+      <polygon points="1080,520 1035,580 1125,580" fill="var(--sage-dark)" opacity="0.55"/>
+      <line x1="1035" y1="580" x2="1010" y2="610" stroke="var(--sage-dark)" stroke-width="2.5"/>
+      <line x1="1125" y1="580" x2="1150" y2="610" stroke="var(--sage-dark)" stroke-width="2.5"/>
+      <line x1="1000" y1="610" x2="1160" y2="610" stroke="var(--sage-dark)" stroke-width="2"/>
+    </g>
+ 
+    <g transform="translate(1080,110)">
+      <path class="arc" d="M-55,-32 A65,65   0 0,1  55,-32"/>
+      <path class="arc" d="M-100,-58 A118,118 0 0,1 100,-58"/>
+      <path class="arc" d="M-148,-84 A173,173 0 0,1 148,-84"/>
+      <path class="arc" d="M-196,-110 A228,228 0 0,1 196,-110"/>
+      <path class="arc" d="M-244,-136 A283,283 0 0,1 244,-136"/>
+      <path class="arc" d="M-292,-162 A338,338 0 0,1 292,-162"/>
+    </g>
+
+    <g opacity="0.14">
+      <circle cx="220" cy="700" r="3.5" fill="var(--sage)"/>
+      <line x1="220" y1="703" x2="220" y2="870" stroke="var(--sage)" stroke-width="2"/>
+      <line x1="207" y1="758" x2="233" y2="758" stroke="var(--sage)" stroke-width="1.2"/>
+      <line x1="200" y1="810" x2="240" y2="810" stroke="var(--sage)" stroke-width="1.2"/>
+      <polygon points="220,870 195,900 245,900" fill="var(--sage)" opacity="0.45"/>
+      <line x1="195" y1="900" x2="180" y2="920" stroke="var(--sage)" stroke-width="1.5"/>
+      <line x1="245" y1="900" x2="260" y2="920" stroke="var(--sage)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(220,700)">
+      <path class="arc2" d="M-38,-22 A44,44   0 0,1  38,-22"/>
+      <path class="arc2" d="M-72,-42 A83,83   0 0,1  72,-42"/>
+      <path class="arc2" d="M-106,-62 A123,123 0 0,1 106,-62"/>
+      <path class="arc2" d="M-140,-82 A163,163 0 0,1 140,-82"/>
+    </g>
+ 
+
+    <path class="sine"
+      d="M-100,360 C50,290 200,430 350,360 S650,290 800,360 S1100,430 1250,360 S1450,290 1550,360"/>
+    <path class="sine"
+      d="M-100,560 C50,490 200,630 350,560 S650,490 800,560 S1100,630 1250,560 S1450,490 1550,560"
+      style="animation-delay:-6s; opacity:0.07"/>
+  </svg>
+</div>
+
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">⌇ Portfolio <span>·</span> EPHEC 2023–2026</div>
+    <ul class="nav-links">
+      <li><a href="#presentation">Présentation</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#activites">Activités</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Présentation -->
+ <section id="presentation">
+  <div class="page">
+    <header class="hero">
+      <div class="hero-text">
+        <h1>Vandermeulen <em>Arnaud</em></h1>
+        <p class="hero-subtitle">
+          Bonjour, je suis Arnaud, étudiant en 3ème année de Bachelier en Technologie de l'informatique et bienvenue sur mon portfolio !<br/>
+          J'ai un grand intérêt pour les télécommunications, ayant un background dans ce domaine. J'aimerais, optimalement, continuer dans cette voie là.<br/>
+          Evidemment, notre bachelier étant généraliste, j'ai pu découvrir d'autres horizons comme l'électronique et le réseau. C'est tout naturellement que j'ai développé un intérêt pour l'IOT.<br/>
+          Ma plus grosse lacune actuelle est le développement mais j'ai pour projet d'y remédier.<br/>
+          Portfolio d'acquisition de compétences
+        </p>
+        <div class="hero-meta">
+          <span class="tag">2023–2026</span>
+          <span class="tag">Télécommunications</span>
+          <span class="tag">Électronique</span>
+          <span class="tag">Réseaux</span>
+        </div>
+      </div>
+
+      <div class="photo-frame">
+        <div class="photo-inner">
+          <img src="pdp.jpg" alt="Photo de profil" />
+          <div class="photo-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            </svg>
+          </div>
+          <div class="signal-dot"></div>
+        </div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- CV -->
+<section id="cv">
+  <div class="page">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Curriculum Vitæ</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="cv-wrapper">
+      <div class="cv-topbar">
+        <span>📄 CV — Arnaud Vandermeulen</span>
+        <!-- CV download -->
+        <a class="btn-download" href="Vandermeulen_Arnaud_CV_VF.pdf" download>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+          Télécharger
+        </a>
+      </div>
+      <!-- CV display -->
+      <object class="cv-embed" data="Vandermeulen_Arnaud_CV_VF.pdf" type="application/pdf">
+        <div class="cv-fallback">
+          Le PDF ne s'affiche pas dans votre navigateur.<br/>
+          <a href="votre-cv.pdf" style="color:var(--sage-dark)">Cliquez ici pour le télécharger.</a>
+        </div>
+      </object>
+    </div>
+  </div>
+</section>
+
+<!-- Activités -->
+<section id="activites">
+  <div class="page">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Activités d'acquisition de compétences</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="themes-grid">
+
+      <!-- ══ THÈME 1 — Hackathon ══ -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Theme 01</div>
+            <div class="theme-title">Hackathon</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">56h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées</span>
+                <span class="h-val counted">16h30</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">Hackathon</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Hackaton Ephec 2024</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">26h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">6h30</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Réalisation d'une borne d'arcade dans une vieille caisse de munition</li>
+                  <li>6 participants de TI + 1 participant de Marketing</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>Ce projet m'as permis, effectivement de pratiquer mon art de la menuiserie mais aussi mes talents liés à l'IT. Une installation d'OS, de l'électronique, et une bonne gestion de projet ont été nécessaires afin de mener ce projet à bien.</br> Quand j'y pense, une des choses que j'ai le plus ressorti de cette expérience, c'est notre capacité à s'entre-aider en groupe et le partage de connaissances dont l'on a fait preuve. </p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Photo de groupe</span>
+                    <a href="preuves/hackat2024.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/hackat2024.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Hackaton Ephec 2025</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">30h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">10h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Réhabilitation d'une machine à écrire en ordinateur.</li>
+                  <li>Ce projet s'est fait en groupe du vendredi soir au dimanche matin.</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>Cet hackaton ci, fût compliqué, plus compliqué que l'année d'avant. J'ai constaté mon manque d'expérience et de compréhension du vaste monde qu'est l'électronique.</br>Mais cela m'a permis de me surpasser et d'apprendre de mes co-équipiers.</br>J'ai pu expérimenter différentes techniques de troubleshooting et de recherche de pannes sur un matériel jusqu'alors inconnu.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Photo de groupe</span>
+                    <a href="preuves/hackat2025.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/hackat2025.jpg" alt="Preuve activité 1.2" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ THÈME 2 CSBE ══ -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 02</div>
+            <div class="theme-title">CyberSecurity Challenge Belgium</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles </span>
+                <span class="h-val">13h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées</span>
+                <span class="h-val counted">7h</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">CyberSecurity Challenge</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">CyberSecurity Challenge 2024</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">13h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">7h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>26 à 30h de challenges de cybersécurité en ligne. </li>
+                  <li>De la cryptographie</li>
+                  <li>De la forensic</li>
+                  <li>Et encore d'autres</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>J'ai pu me tirer les cheveux pendant quelques heures sur des challenges d'une difficulté de niveau national. Il m'a permis de me rendre compte de mes lacunes en compréhension de cybersécurité de base mais aussi de dévellopement et d'utilisation d'outils spécialisés.</br>Ce fût une épreuve difficile pour moi mais rendue sympathique et ludique grâce à mes camarades.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Screenshot des participants du groupe </span>
+                    <a href="preuves/CSBE.png" target="_blank" class="proof-link">
+                      <img src="preuves/CSBE.png" alt="Preuve activité 2" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ THÈME 3 — CTF ══ -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 03</div>
+            <div class="theme-title">Initiation au Capture the flag</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">2h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées</span>
+                <span class="h-val counted">2h</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">CTF</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Initiation Capture the flag mars 2024</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">1h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">1h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Une heure d'initiation au CTF encadré par Monsieur VAN DORMAEL et les 2 et 3ème années de 2024, sur le temps de midi</li>
+                  <li>Ce sont des mini challenges d'initiation aux différentes composantes d'un CTF</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>J'ai vu pour la première fois la complexité des challenges de Cyber sécurité.</br>J'ai aussi constaté la différence de niveau avec certains de mes camarades mais c'était fort plaisant et enrichissant d'apprendre certains concepts en pratique, que nous allions voire plus tard en cours.</br>Je me suis permis de mettre ces activités en dehors du spectre du CSBE vu les enseignements tirés des 2 expériences, totalement différents.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Badge nominatif + photo à l'accueil.</span>
+                    <a href="preuves/CTF1.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/CTF1.jpg" alt="Preuve activité 3.1" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Initiation Capture the flag 2025</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">1h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">1h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Une heure d'initiation au CTF encadré par Monsieur VAN DORMAEL et les 3ème années de 2025, sur le temps de midi</li>
+                  <li>Ce sont des mini challenges d'initiation aux différentes composantes d'un CTF</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>J'ai enfin pu retirer de la pratique dans less cours théoriques reçu à cette période là. J'ai trouvé cela super enrichissant pour la continuité de l'intégration des compétences apprises lors dess cours dispensé par nos professeurs.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Attestation</span>
+                    <a href="preuves/CTF2.png" target="_blank" class="proof-link">
+                      <img src="preuves/CTF2.png" alt="Preuve activité 3.2" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ THÈME 4 — Conférence ══ -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 04</div>
+            <div class="theme-title">Conférence</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">4h30h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées</span>
+                <span class="h-val counted">4h30</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">Conférence</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Cloud avec M365 et Azure Infrastructure</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">2h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">2h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Conférence donnée le 3 novembre 2025 par Kevin Keurvels de la société Axentys : Services et support informatiques pour professionnels. L'intervenant nous à introduit aux tenants Azure et aux automatisations possibles en entreprise intégrées au Cloud Microsoft.</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>Cette conférence m'a permis d'avoir une première vue des possibilités liées au cloud. Cette partie étant, à mon avis, faible voir manquante au sein des cours de notre bachelier. J'ai pu en effet, être un minimum à l'aise dans l'environnement Azure de mon stage grâce au retour d'expérience que Monsieur Keurvels nous a fourni.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Mail</span>
+                    <a href="preuves/M365.png" target="_blank" class="proof-link">
+                      <img src="preuves/M365.png" alt="Preuve activité " class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Conférence sur l'impact des IA conversationnelles sur les relations humais</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">2h30</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">2h30</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Conférence du 14 avril 2026. Trois intervenants de domaines d'expertise variés, se sont rassemblés afin de nous parler de leurs expériences liés aux IA conversationnelles. </li>
+                  <li>Geertrui Mieke De Ketelaere : Experte en IA, conférencière internationale et autrice du livre "Le piège invisible des chatbots, a pu lier expertise technique et contact humain pour nous décrire le fonctionnement et la construction de ces IAs. Elle présentais déjà une grande partie des dérives comportementales des personnes utilisatrices des IAs génératives.</li>
+                  <li>Jean-Yves Hayez : Professeur en psychologie (UCLouvain), expert du développement des jeunes, présentait l'analyse psychologique des personnes touchées par l'utilisation abusive de ces IAs </li>
+                  <li>Serge Goriely: Cinéaste et chercheur spécialisé dans les relations humains–IA, nous a parlé du lien entre les IAs génératives et les effets néfastes pour l'Art</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>Etant membre du Kap organisateur de l'activité, je l'ai dissociée des activités du Kap car je n'ai, en aucun point, participé à son élaboration.</br>J'ai trouvé pertinent de s'intéressrt aux effets néfastes d'un outil qui s'est propagé au sein de notre école, et de toute la génération d'étudiants actuelle, comme des personnes bien installées dans le milieu du travail.</br> L'Ephec essaie d'intégrer l'IA dans ces cours et je trouve que c'est une bonne initiative. J'ai aussi trouvé important la prise de conscience que cette conférence m'a apporté sur les tenants et aboutissants de l'utilisation de l'IA générative.</p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Photo</span>
+                    <a href="preuves/confKap.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/confKap.jpg" alt="Preuve activité " class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ THÈME 5 Kap ══ -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 05</div>
+            <div class="theme-title">Kot à projet</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">+50h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées (max 10h)</span>
+                <span class="h-val counted">10h</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">Kaptech</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Kaptech</div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">+50h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">10h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Le <strong>KAPTECH</strong> est un Kot à projet dont la mission est de vulgariser, principalement aux étudiants, les technologies et les sciences appliquées grâce à un pannel d'activité divers et varié</li>
+                  <li>Commandes d'impression 3D </li>
+                  <li>Commandes de gravure laser </li>
+                  <li>Initiation aux drones </li>
+                  <li>BattleBots, combats de robots </li>
+                  <li>Revue et article </li>
+                  <li>Visite d'entreprise et de labo </li>
+                  <li>Conférence </li>
+                  <li>Activité VR chez VEX </li>
+                  <li><a href="https://kaptech.be/">Le Kaptech</a></li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>J'ai, durant cette année de Kap 2025-26, creusé des sujets cachés derrière nos cours, comme l'impression 3, qui aura servi à beaucoup de groupe pour leur projet, qui requiert une aisance avec les outils informatisés. Je peux aussi citer les drones et robots qui sont une compilation de savoir faire en terme d'électronique, de télécommunication et de développement. </br>J'ai surtout essayé d'apporter ce partage de connaissance et d'intéret sur des dommaines beaucoup plus liés à l'informatique, les trois quarts des "Kaptechniciens.ennes" étant des ingénieurs civiles, rarement avec une spécialité dans le domaine de l'informatique.</br>Quand je pense à la technologie, je vois des radios, des serveurs, des outils de DevSecOps, eux pensent généralement plus souflerie, aérodynamisme, mécanique quantique ou encore électro-mécanique.</br></p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Badge nominatif + photo à l'accueil.</span>
+                    <a href="preuves/Kap1.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/Kap1.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                    <a href="preuves/Kap2.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/Kap2.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══ THÈME 6 CR Télécommunication -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 06</div>
+            <div class="theme-title">Télécommunication</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">+120h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées (max 10h)</span>
+                <span class="h-val counted">10h</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">Télécommunication</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Responsable adjoint au service secours de la section locale de la Croix Rouge à Auderghem - Responsable Télécoms </div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">+120h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">10h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>Entretien, Réparation, Renouvellement et Rangement du matériel radio (radio VHF et radio Astrid) </li>
+                  <li>Formation et entrainement continu à la manipulation du matériel radio et aux procédures de communication</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>
+                    Cela fait quelques années que je suis responsable du matériel de radiocommunication au sein de ma section locale. </br>
+                    Je fais donc des tâches d'entretien et de conditionnement du matériel qui me permettent d'acquérir une bonne connaissance des radios.</br>
+                    J'essaye donc de rester à jour sur les nouveautés techniques utilisées par le service secours de manière générale.</br></br>
+                    Les cours de télécommunication et d'électronique dispensés à l'Ephec m'ont permis une meilleure compréhension technique facilitant mes tâches. C'est aussi grâce à mon expérience auprès de la croix rouge, que la compréhension des cours fût plus aisée.</br>
+                    De même, former des utilisateurs néophytes aux spécifités des systèmes radio VHF et Astrid, entretient mes connaissances et ma pratique mais aussi continue à me former à long terme.</br>
+                    Le courbe de croissance d'apprentissage suit aussi l'arrivage de nouveaux équipements de plus en plus complexes.
+                  </p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Photos</span>
+                    <a href="preuves/TCR1.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/TCR1.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                    <a href="preuves/TCR2.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/TCR2.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ THÈME 7 CR Secourisme -->
+      <div class="theme-card">
+        <div class="theme-header" onclick="toggleTheme(this)">
+          <div>
+            <div class="theme-num">Thème 07</div>
+            <div class="theme-title">Secourisme</div>
+            <div class="theme-hours-summary">
+              <div class="h-block">
+                <span class="h-label">Heures réelles</span>
+                <span class="h-val">+250h</span>
+              </div>
+              <div class="h-block">
+                <span class="h-label">Heures comptées (max 10h)</span>
+                <span class="h-val counted">10h</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-right">
+            <span class="theme-type-badge">Télécommunication</span>
+            <svg class="theme-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div class="theme-body">
+          <div class="activity-list">
+
+            <div class="activity-item">
+              <div class="activity-header" onclick="toggleActivity(this)">
+                <div>
+                  <div class="activity-name">Secouriste événementiel auprès de la section locale de la Croix-Rouge à Auderghem </div>
+                  <div class="activity-hours-row">
+                    <div class="ah-block">
+                      <span class="ah-label">Heures réelles</span>
+                      <span class="ah-val">+250h</span>
+                    </div>
+                    <div class="ah-block">
+                      <span class="ah-label">Heures comptées</span>
+                      <span class="ah-val counted">10h</span>
+                    </div>
+                  </div>
+                </div>
+                <svg class="act-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="activity-body">
+                <div class="act-section">Description de l'activité</div>
+                <ul>
+                  <li>C'est de nature volontaire que je participe à des dispositifs médicaux préventifs. </br> Le but est d'assurer une présence lors d'événements divers et variés est de pouvoir, si besoin, prodiguer les premiers soins et fournir un soutien moral aux patients.</br>Pour cela, chaque volontaire suit une formation de secourisme événementiel et additionellement, d'autres ptratiques de terrain.</li>
+                </ul>
+                <div class="act-section">Analyse réflexive</div>
+                <div class="reflexion-block">
+                  <p>
+                    Cela fait depuis 2018 que je suis volontaire au service secours.</br>
+                    Cette expérience me permet, évidemment, de pouvoir réagir en cas de problème. Mais si je doit en retirer d'autres aspects, ce sont le travail d'équipe et la communication qui se contruisent et évolue au fil des années.</br>
+                    Travailler en équipe est essentiel dans le monde du travail et c'est en grosse partie grâce à la Croix-Rouge que j'en suis conscient et que je mets un point d'honneur à bien faire les choses en équipe.</br>
+                    C'est aussi bonne école pour apprendre à communiquer correctement, autant avec ses collègues qu'avec des personnes paniquées ou en état second. On développe aussi bien de l'emphatie que de l'assertivité, qui sont deux composantes essentielles pour évoluer dans un monde ou nous ne sommes pas des professionnels mais nous travaillons comme tel.  
+                  </p>
+                </div>
+                <div class="proof-block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <div class="proof-content">
+                    <span><strong>Preuve :</strong> Photos</span>
+                    <a href="preuves/CR1.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/CR1.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                    <a href="preuves/CR2.jpg" target="_blank" class="proof-link">
+                      <img src="preuves/CR2.jpg" alt="Preuve activité 1.1" class="proof-img" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="totals-bar">
+      <div class="total-block">
+        <svg class="total-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+        </svg>
+        <div class="total-info">
+          <span class="total-label">Total heures réelles</span>
+          <span class="total-val">+500h</span>
+        </div>
+      </div>
+      <div class="total-block">
+        <svg class="total-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div class="total-info">
+          <span class="total-label">Total heures comptées (portfolio)</span>
+          <span class="total-val">60</span>
+        </div>
+      </div>
+      <div class="total-block">
+        <svg class="total-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M9 2v4M15 2v4M3 10h18"/>
+        </svg>
+        <div class="total-info">
+          <span class="total-label">Nombre de thèmes</span>
+          <span class="total-val">7</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<footer>
+  <div class="page">
+    <div class="footer-wave">
+      <svg width="80" height="24" viewBox="0 0 80 24" fill="none">
+        <path d="M0,12 C10,4 20,20 30,12 S50,4 60,12 S75,20 80,12" stroke="var(--sage)" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+    <p>Portfolio EPHEC · 2023–2026  © 2026 Vandermeulen Arnaud Tous droits réservés.</p>
+  </div>
+</footer>
+
+
+<script>
+  function toggleTheme(header) {
+    const body    = header.nextElementSibling;
+    const chevron = header.querySelector('.theme-chevron');
+    const open    = body.classList.toggle('open');
+    chevron.classList.toggle('open', open);
+  }
+  function toggleActivity(header) {
+    const body    = header.nextElementSibling;
+    const chevron = header.querySelector('.act-chevron');
+    const open    = body.classList.toggle('open');
+    chevron.classList.toggle('open', open);
+  }
+</script>
+</body>
+</html>
